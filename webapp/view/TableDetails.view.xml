@@ -1,0 +1,49 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.ui.layout.form"
+controllerName="emal.fiori.controller.TableDetails"
+  xmlns:html="http://www.w3.org/1999/xhtml">
+      <Page title="Item Details">
+            <customHeader>
+      <Bar class="updateHeaderTopBorderDesign">
+        <contentLeft>
+          <core:Fragment fragmentName="emal.fiori.view.fragments.NavBackButton"
+            type="XML" />
+        </contentLeft>
+        <contentMiddle>
+          <Label text="Item Details" />
+        </contentMiddle>
+        <contentRight>
+          <!--<Image src="img/logo.PNG" />-->
+        </contentRight>
+      </Bar>
+    </customHeader>
+        <content>
+          <f:SimpleForm minWidth="1024" maxContainerCols="2"
+            editable="false" layout="ResponsiveGridLayout" title=""
+            labelSpanL="6" labelSpanM="6" emptySpanL="0" emptySpanM="0"
+            columnsL="2" columnsM="1" class="sapUmcVerticalBeforeSpacingX4">
+            <f:content>
+                <Label text="Seq. Number" /><Text text="{LocalItemModel>/Pbuzei}" class="sapUmcBillMText" />
+                <Label text="Details" /><Text text="{LocalItemModel>/Sgtxt}" class="sapUmcBillMText" />
+                <Label text="Amount" />
+                <Text text="{
+    path: 'LocalDetailModel>/Wrbtr',
+    type: 'sap.ui.model.type.Float',
+    formatOptions: {
+        maxFractionDigits: 2,
+        groupingSeparator: ',',
+       decimalSeparator: '.'
+    }
+} {LocalDetailModel>/Waers}"/>
+                <Label text="Cost Center" /><Text text="{LocalItemModel>/Kostl}" class="sapUmcBillMText" />
+                <Label text="GL" /><Text text="{LocalItemModel>/Hkont}" class="sapUmcBillMText" />
+                <Label text="GL Description" /><Text text="{LocalItemModel>/Hkbez}" class="sapUmcBillMText" />
+                <Label text="WBS Element" /><Text text="{LocalItemModel>/Posid}" class="sapUmcBillMText" />
+                <Label text="WBS Description" /><Text text="{LocalItemModel>/Poski}" class="sapUmcBillMText" />
+                <Label text="Order No" /><Text text="{LocalItemModel>/Aufnr}" class="sapUmcBillMText" />
+                <Label text="Order Description" /><Text text="{LocalItemModel>/Ktext}" class="sapUmcBillMText" />
+                <Label text="Assigment" /><Text text="{LocalItemModel>/Zuonr}" class="sapUmcBillMText" />
+            </f:content>
+          </f:SimpleForm>
+        </content>
+      </Page>
+</mvc:View>

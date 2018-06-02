@@ -1,0 +1,8 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout">
+		<HBox>
+			<Button icon="sap-icon://nav-back" class="addBorderRight" press="onNavBack"/>
+		</HBox>
+</core:FragmentDefinition>

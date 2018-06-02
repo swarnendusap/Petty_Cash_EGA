@@ -1,0 +1,139 @@
+<mvc:View controllerName="emal.fiori.controller.Detail" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:mvc="sap.ui.core.mvc"
+  xmlns:footerbar="sap.ushell.ui.footerbar">
+  <Page id="page" navButtonPress="onNavBack" showNavButton="{device>/system/phone}" title="{i18n>detailTitle}"
+    busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}">
+    <content>
+      <ObjectHeader id="objectHeader" title="{CreatedByName}"></ObjectHeader>
+      <IconTabBar id="iconTabBar" class="sapUiResponsiveContentPadding">
+        <items>
+          <IconTabFilter id="iconTabBarFilter1" icon="sap-icon://hint" text="{i18n>detailIconTabBarInfo}">
+            <VBox class="sapUiSmallMargin">
+              <f:SimpleForm id="Summery" minWidth="1024" maxContainerCols="2" editable="false" layout="ResponsiveGridLayout" title="" labelSpanL="4"
+                labelSpanM="4" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2">
+                <f:content>
+                  <Label text="Document No"/>
+                  <Text text="{LocalDetailModel>/Pbelnr}"/>
+                  <!--1-->
+                  <!--text="{ parts:[ {path: 'dtlModelValue>/Detail/Currency'}, {path: 'dtlModelValue>/Detail/PlanTotal'} ], formatter: 'emalDubalAR.util.formatter.concateTwoValue_roundVal' }"/>-->
+                  <Label text="Date"/>
+                  <Text text="{ path: 'LocalDetailModel>/Cdate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd.MM.yyyy' }}"/>
+                  <Label text="Company Code"/>
+                  <Text text="{LocalDetailModel>/Bukrs}"/>
+                  <Label text="Employee"/>
+                  <Text text="{LocalDetailModel>/Ename} ({LocalDetailModel>/Pernr})"/>
+                  <Label text="Total Amount"/>
+                  <Text text="{
+    path: 'LocalDetailModel>/Azbet',
+    type: 'sap.ui.model.type.Float',
+    formatOptions: {
+        maxFractionDigits: 2,
+        groupingSeparator: ',',
+       decimalSeparator: '.'
+    }
+} {LocalDetailModel>/Waers}"/>
+                  <Label text="Charging Cost Center"/>
+                  <Text text="{LocalDetailModel>/Kostl}"/>
+                  <Label text="Req. Cost Center"/>
+                  <Text text="{LocalDetailModel>/Ckostl}"/>
+                  <Label text="Document Text"/>
+                  <Text text="{LocalDetailModel>/Bktxt}"/>
+                </f:content>
+              </f:SimpleForm>
+            </VBox>
+          </IconTabFilter>
+          <IconTabFilter id="iconTabBarFilter2" icon="sap-icon://citizen-connect" text="{i18n>detailIconTabBarWorkflowLog}"
+            tooltip="{i18n>detailIconTabBarWorkflowLog}">
+            <VBox class="sapUiSmallMargin">
+              <f:SimpleForm id="workLog" minWidth="1024" maxContainerCols="2" editable="false" layout="ResponsiveGridLayout" title="" labelSpanL="4"
+                labelSpanM="4" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2">
+                <f:content>
+                  <Title text="Workflow Log"/>
+                  <Label text="Already endorsed by"/>
+                  <List id="inBoxValues" inset="true" noDataText="No previous approver" growing="true" growingScrollToLoad="true" width="100%" backgroundDesign="Solid"
+                    items="{ path:'LocalWorkflowLogsModel>/' }">
+                    <items>
+                      <ObjectListItem title="{LocalWorkflowLogsModel>NameText}">
+                        <!--<attributes>
+                          <ObjectAttribute text="{LocalWorkflowLogsModel>WiId}"/>
+                        </attributes>-->
+                      </ObjectListItem>
+                    </items>
+                  </List>
+                </f:content>
+              </f:SimpleForm>
+            </VBox>
+          </IconTabFilter>
+          <IconTabFilter id="iconTabBarFilter3" icon="sap-icon://attachment" text="{i18n>detailIconTabBarAttachments}"
+            tooltip="{i18n>detailIconTabBarAttachments}">
+            <VBox class="sapUiSmallMargin">
+              <f:SimpleForm id="Attchmnt" minWidth="1024" maxContainerCols="2" editable="false" layout="ResponsiveGridLayout" title="" labelSpanL="4"
+                labelSpanM="4" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2">
+                <f:content>
+                  <Title text="Check supporting Documents"/>
+                  <!--                          <Label text=""/><Text text="Test.xls"/>-->
+                  <List id="attDocValues" inset="true" noDataText="No document attached" growing="true" growingScrollToLoad="true" width="100%" backgroundDesign="Solid"
+                    items="{ path:'LocalAttachmentModel>/' }">
+                    <items>
+                      <ObjectListItem title='{LocalAttachmentModel>FileName}' type="Active" press="onDocSelect"></ObjectListItem>
+                    </items>
+                  </List>
+                </f:content>
+              </f:SimpleForm>
+            </VBox>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+      <Table id="DetailTable" items="{path: 'LocalItemModel>/'}">
+        <headerToolbar>
+          <Toolbar>
+            <Title text="Items" level="H2"/>
+          </Toolbar>
+        </headerToolbar>
+        <columns>
+          <Column>
+            <Text text="Seq. No."/>
+          </Column>
+          <Column>
+            <Text text="Detail Description"/>
+          </Column>
+          <Column>
+            <Text text="Amount"/>
+          </Column>
+        </columns>
+        <items>
+          <ColumnListItem type="Navigation" press="selectTableRow">
+            <cells>
+              <Text text="{LocalItemModel>Pbuzei}"/>
+              <Text text="{LocalItemModel>Sgtxt}"/>
+              <Text class="sapUmcBillMText"
+              text="{
+    path: 'LocalItemModel>Wrbtr',
+    type: 'sap.ui.model.type.Float',
+    formatOptions: {
+        maxFractionDigits: 2,
+        groupingSeparator: ',',
+       decimalSeparator: '.'
+    }
+}"/>
+            </cells>
+          </ColumnListItem>
+        </items>
+      </Table>
+    </content>
+    <footer>
+      <OverflowToolbar id="footerToolbar">
+        <ToolbarSpacer/>
+          <Button type="Accept" text="Approve" press="openApproveRejectDialog" icon="sap-icon://accept"/>
+              <Button type="Reject" text="Reject" press="openApproveRejectDialog" icon="sap-icon://decline"/>
+      </OverflowToolbar>
+    </footer>
+    <!--<semantic:positiveAction>
+      <semantic:PositiveAction text="Approve" press="openApproveRejectDialog"/>
+    </semantic:positiveAction>
+
+    <semantic:negativeAction>
+      <semantic:NegativeAction text="Reject" press="openApproveRejectDialog"/>
+    </semantic:negativeAction>-->
+
+  </Page>
+</mvc:View>
